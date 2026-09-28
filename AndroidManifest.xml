@@ -32,17 +32,12 @@
         android:allowBackup="false"
         android:appCategory="video">
 
+        <!-- T-OS-FILES-MEDIA: VIEW-only handler. No LAUNCHER — DocumentsUI remains
+             the single Files icon. Library UI is reached via explicit intents. -->
         <activity
             android:name=".activity.PumpActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
         </activity>
 
         <activity
@@ -100,8 +95,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <!-- TODO(b/123768100) Investigate which schemes, mime types, etc to support -->
+                <!-- T-OS-FILES-MEDIA: user-storage video open (content + file).
+                     Explicit mp4/webm plus video/* so queryIntentActivities matches. -->
                 <data android:scheme="content"/>
+                <data android:scheme="file"/>
+                <data android:mimeType="video/mp4"/>
+                <data android:mimeType="video/webm"/>
                 <data android:mimeType="video/*"/>
             </intent-filter>
 
